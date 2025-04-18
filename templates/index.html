@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Letter Recognition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6ecf0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #222;
+            text-align: center;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            border: 2px solid #cccccc;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            width: 90%;
+            max-width: 900px; 
+            box-sizing: border-box;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 16px;
+        }
+
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .grid-item label {
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .grid-item input {
+            padding: 10px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 100%; 
+            box-sizing: border-box;
+        }
+
+        .form-container input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .prediction {
+            margin-top: 25px;
+            font-size: 20px;
+            color: #444;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr); 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Letter Recognition - Enter Features</h2>
+
+    <form method="POST" action="/predict" class="form-container">
+        <div class="grid">
+            {% for name in feature_names %}
+            <div class="grid-item">
+                <label>{{ name }}:</label>
+                <input type="text" name="feature{{ loop.index }}" required>
+            </div>
+            {% endfor %}
+        </div>
+        <input type="submit" value="Predict">
+    </form>
+
+    {% if prediction %}
+        <div class="prediction">
+            <h3>{{ prediction }}</h3>
+        </div>
+    {% endif %}
+
+</body>
+</html>
